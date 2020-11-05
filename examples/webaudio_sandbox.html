@@ -70,7 +70,9 @@
 				scene.add( mesh1 );
 
 				const sound1 = new THREE.PositionalAudio( listener );
-				audioLoader.load( 'sounds/358232_j_s_song.ogg', function ( buffer ) {
+
+				//Load Body Sensor Sound - Nikos
+				audioLoader.load( 'sounds/BodySensorTWOSensorsKostas1Left', function ( buffer ) {
 
 					sound1.setBuffer( buffer );
 					sound1.setRefDistance( 20 );
@@ -86,7 +88,9 @@
 				scene.add( mesh2 );
 
 				const sound2 = new THREE.PositionalAudio( listener );
-				audioLoader.load( 'sounds/376737_Skullbeatz___Bad_Cat_Maste.ogg', function ( buffer ) {
+
+				//Load Body Sensor Sound - Nikos
+				audioLoader.load( 'sounds/BodySensorTWOSensorsKostas2Right', function ( buffer ) {
 
 					sound2.setBuffer( buffer );
 					sound2.setRefDistance( 20 );
