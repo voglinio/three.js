@@ -49,9 +49,9 @@
 				camera.add( listener );
 
 				scene = new THREE.Scene();
-				scene.fog = new THREE.FogExp2( 0x000000, 0.0025 );
+				scene.fog = new THREE.FogExp2( 0x000000, 0.0000 ); //scene.fog = new THREE.FogExp2( 0x000000, 0.0025 );
 
-				light = new THREE.DirectionalLight( 0xffffff );
+				light = new THREE.HemisphereLight( 0xffffbb, 0xffffff, 1);  //light = new THREE.DirectionalLight( 0xffffff );
 				light.position.set( 0, 0.5, 1 ).normalize();
 				scene.add( light );
 
@@ -66,7 +66,7 @@
 				const audioLoader = new THREE.AudioLoader();
 
 				const mesh1 = new THREE.Mesh( sphere, material1 );
-				mesh1.position.set( - 250, 30, 0 );
+				mesh1.position.set( 150, 30, -250 );  //mesh1.position.set( - 250, 30, 0 );
 				scene.add( mesh1 );
 
 				const sound1 = new THREE.PositionalAudio( listener );
@@ -75,8 +75,10 @@
 				audioLoader.load( 'sounds/BodySensorTWOSensorsKostas1Left.mp3', function ( buffer ) {
 
 					sound1.setBuffer( buffer );
+					sound1.setLoop( true );
 					sound1.setRefDistance( 20 );
 					sound1.play();
+
 
 				} );
 				mesh1.add( sound1 );
@@ -84,7 +86,7 @@
 				//
 
 				const mesh2 = new THREE.Mesh( sphere, material2 );
-				mesh2.position.set( 250, 30, 0 );
+				mesh2.position.set( 100, 30, -250 );  //mesh2.position.set( 250, 30, 0 );
 				scene.add( mesh2 );
 
 				const sound2 = new THREE.PositionalAudio( listener );
@@ -93,8 +95,10 @@
 				audioLoader.load( 'sounds/BodySensorTWOSensorsKostas2Right.mp3', function ( buffer ) {
 
 					sound2.setBuffer( buffer );
+					sound2.setLoop( true );
 					sound2.setRefDistance( 20 );
 					sound2.play();
+
 
 				} );
 				mesh2.add( sound2 );
@@ -112,7 +116,7 @@
 				oscillator.start( 0 );
 				sound3.setNodeSource( oscillator );
 				sound3.setRefDistance( 20 );
-				sound3.setVolume( 0.5 );
+				sound3.setVolume( 0.0 ); //it was 0.5
 				mesh3.add( sound3 );
 
 				// analysers
@@ -128,7 +132,7 @@
 
 					sound4.setBuffer( buffer );
 					sound4.setLoop( true );
-					sound4.setVolume( 0.5 );
+					sound4.setVolume( 0.0 ); //it was 0.5
 					sound4.play();
 
 				} );
