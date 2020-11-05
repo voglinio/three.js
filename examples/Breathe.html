@@ -18,12 +18,13 @@
 
 
 <div class="container">
-	<img src="./assets/PersonOutline.png"alt="PersonOutline" style="width:100%">
+	<img src="./assets/PersonOutline.png" alt="PersonOutline" style="width:100%">
 	<button id="button" class="btn">Play</button>
 </div>
 
 
-<audio id="player"><source src='./assets/BodySensorTWOSensorsKostas1Left.mp3' type="audio/ogg">
+<audio id="player">
+	<source src='./assets/BodySensorTWOSensorsKostas1Left.mp3' type="audio/ogg">
 	<p>Browser too old to support HTML5 audio? How depressing!</p>
 </audio>
 
@@ -42,8 +43,6 @@ Y-coordinate
 <input type="text" id="Y">
 
 
-
-
 <script>
 
 	var button = document.getElementById("button");
@@ -53,8 +52,8 @@ Y-coordinate
 	const myAudio = document.getElementById("player");
 
 
-	button.addEventListener("click", function(){
-		if(myAudio.paused){
+	button.addEventListener("click", function () {
+		if (myAudio.paused) {
 			myAudio.play();
 			button.innerHTML = "Pause";
 
@@ -71,7 +70,6 @@ Y-coordinate
 
 
 	});
-
 
 
 	myAudio.addEventListener('play', () => {
@@ -108,9 +106,9 @@ Y-coordinate
 			CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
 			CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
 			//console.log(CurX);
-			var AmpDist = Math.round(Math.abs(100-CurX)+ Math.abs(195-CurY))
+			var AmpDist = Math.round(Math.abs(100 - CurX) + Math.abs(195 - CurY))
 
-			gainNode.gain.value = HEIGHT/AmpDist;
+			gainNode.gain.value = HEIGHT / AmpDist;
 
 			myAudio.volume = 1
 		}
@@ -123,7 +121,6 @@ Y-coordinate
 		gainNode.connect(audioCtx.destination);
 
 	});
-
 
 
 	// coordinate function that calculate the X
