@@ -19,17 +19,18 @@
 
 <div class="container">
 	<img src="./assets/PersonOutline.png" alt="PersonOutline" style="width:100%">
-	<button id="button" class="btn">Play</button>
-	<button id="button1" class="btn1">Play</button>
+	<button id="buttonStart" class="btnStart">Start</button>
+	<button id="button" class="btn">Enable</button>
+	<button id="button1" class="btn1">Enable</button>
 </div>
 
 <audio id="player">
-	<source src='./assets/BodySensorTWOSensorsKostas1Left.mp3' type="audio/ogg">
+	<source src='./assets/BodySensorTWOSensorsKostas2Right.mp3' type="audio/ogg">
 	<p>Browser too old to support HTML5 audio? How depressing!</p>
 </audio>
 
 <audio id="player1">
-	<source src='./assets/BodySensorTWOSensorsKostas2Right.mp3' type="audio/ogg">
+	<source src='./assets/BodySensorTWOSensorsKostas1Left.mp3' type="audio/ogg">
 	<p>Browser too old to support HTML5 audio? How depressing!</p>
 </audio>
 
@@ -48,27 +49,33 @@ X-coordinate
 
 <!-- Y coordinate is stored in Y-coordinate variable -->
 Y-coordinate
-<input type="text" id="Y">
+<label for="Y"></label><input type="text" id="Y">
+
 
 
 <script>
 	var ball = document.getElementById("circle");
 
+	var buttonStart = document.getElementById("buttonStart");
 	var button = document.getElementById("button");
 	var button1 = document.getElementById("button1");
 
-	var gainNode = 0;
-	var gainNode1 = 0;
+	var gainNodeFlag = 0;
+	var gainNodeFlag1 = 0;
 
-	const AudioContext = window.AudioContext || window.webkitAudioContext;
-	let audioCtx;
-	let audioCtx1;
+	var AudioContext = window.AudioContext || window.webkitAudioContext;
+	var audioCtx;
 
-	const myAudio = document.getElementById("player");
-	const myAudio1 = document.getElementById("player1");
+
+	var myAudio = document.getElementById("player");
+	var myAudio1 = document.getElementById("player1");
 
 	var pointerX = 250;
 	var pointerY = 300;
+
+	//let HEIGHT = window.innerHeight;
+	//let WIDTH = window.innerWidth;
+	var HEIGHT = 7;
 
 	//Move the pointer
 	ball.onmousedown = function (event) {
@@ -110,87 +117,113 @@ Y-coordinate
 	};
 
 
-
-	button.addEventListener("click", function () {
-		if (myAudio.paused) {
+	buttonStart.addEventListener("click", function () {
+		if (gainNodeFlag === 0 || gainNodeFlag1 === 0) {
 			myAudio.play();
 			myAudio1.play();
-			button.innerHTML = "Pause";
-			button1.innerHTML = "Pause";
+			gainNodeFlag = 1;
+			gainNodeFlag1 = 1;
+			buttonStart.innerHTML = "Pause";
+			button.innerHTML = "Disable";
+			button1.innerHTML = "Disable";
+		}
+
+		else  {
+			myAudio.pause();
+			myAudio1.pause();
+			gainNodeFlag = 0;
+			gainNodeFlag1 = 0;
+			buttonStart.innerHTML = "Start";
+			button.innerHTML = "Enable";
+			button1.innerHTML = "Enable";
+		}
+	});
+
+
+
+	button.addEventListener("click", function () {
+		if (gainNodeFlag === 1) {
+			//myAudio.play();
+			gainNodeFlag = 0;
+			button.innerHTML = "Enable";
 
 		} else {
-			//myAudio.pause();
-			gainNode.gain.value = 0;
-			button.innerHTML = "Play";
+			//gainNode.gain.value = 0;
+			gainNodeFlag = 1;
+			button.innerHTML = "Disable";
 		}
 	});
 
 	button1.addEventListener("click", function () {
-		if (myAudio1.paused) {
-			myAudio1.play();
-			myAudio.play();
-			button1.innerHTML = "Pause";
-			button.innerHTML = "Pause";
+		if (gainNodeFlag1 === 1) {
+			//myAudio.play();
+			gainNodeFlag1 = 0;
+			button1.innerHTML = "Enable";
 
 		} else {
-			//myAudio1.pause();
-			gainNode1.gain.value = 0;
-			button1.innerHTML = "Play";
+			//gainNode.gain.value = 0;
+			gainNodeFlag1 = 1;
+			button1.innerHTML = "Disable";
 		}
 	});
 
 
 
-
-	myAudio.addEventListener('pause', () => {
-
-		let source = audioCtx.createMediaElementSource(myAudio);
-
-	});
-
-
 	myAudio.addEventListener('play', () => {
 
-		let audioCtx = new AudioContext();
+		var audioCtx = new AudioContext();
 
 		// Create a MediaElementAudioSourceNode
 		// Feed the HTMLMediaElement into it
-
 		let source = audioCtx.createMediaElementSource(myAudio);
+		let source1 = audioCtx.createMediaElementSource(myAudio1);
 
 		// Create a gain node
 		let gainNode = audioCtx.createGain();
+		let gainNode1 = audioCtx.createGain();
 
 		// Create variables to store mouse pointer Y coordinate
 		// and HEIGHT of screen
 		let CurY;
 		let CurX;
 
-		//let HEIGHT = window.innerHeight;
-		//let WIDTH = window.innerWidth;
-		let HEIGHT = 5;
-
 		// Get new mouse pointer coordinates when mouse is moved
 		// then set new gain value
 
-
 		document.onmousemove = updatePage;
-
-		console.log("play");
 
 		function updatePage(e) {
 
 			CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
 			CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-			//console.log(CurX);
 			//var AmpDist = Math.round(Math.abs(151 - CurX) + Math.abs(260) - CurY)
 
-			console.log(pointerX);
 			var AmpDist = Math.round(Math.abs(151 - pointerX) + Math.abs(260) - pointerY)
+			var AmpDist1 = Math.round(Math.abs(242 - pointerX) + Math.abs(260) - pointerY)
 
-			gainNode.gain.value = HEIGHT / AmpDist;
+			console.log(Math.abs(HEIGHT / AmpDist));
 
-			myAudio.volume = 1;
+			if(gainNodeFlag === 1) {
+
+				gainNode.gain.value = Math.abs(HEIGHT / AmpDist)+0.05;
+			}
+			else {
+				gainNode.gain.value =0
+				gainNodeFlag = 0;
+			}
+
+
+
+			if(gainNodeFlag1 === 1) {
+
+				gainNode1.gain.value = Math.abs(HEIGHT / AmpDist1)+0.05;
+			}
+			else {
+				gainNode1.gain.value =0
+				gainNodeFlag1 = 0;
+			}
+
+			//myAudio.volume = 1;
 		}
 
 
@@ -198,79 +231,11 @@ Y-coordinate
 		// and the gainNode to the destination, so we can play the
 		// music and adjust the volume using the mouse cursor
 		source.connect(gainNode);
-		gainNode.connect(audioCtx.destination);
-
-	});
-
-
-	myAudio1.addEventListener('play', () => {
-
-		let audioCtx1 = new AudioContext();
-
-		// Create a MediaElementAudioSourceNode
-		// Feed the HTMLMediaElement into it
-
-		let source1 = audioCtx1.createMediaElementSource(myAudio1);
-
-		// Create a gain node
-		let gainNode1 = audioCtx1.createGain();
-
-		// Create variables to store mouse pointer Y coordinate
-		// and HEIGHT of screen
-		let CurY;
-		let CurX;
-
-		//let HEIGHT = window.innerHeight;
-		//let WIDTH = window.innerWidth;
-		let HEIGHT = 5;
-
-		// Get new mouse pointer coordinates when mouse is moved
-		// then set new gain value
-
-
-		document.onmousemove = updatePage;
-
-		console.log("play");
-
-		function updatePage(e) {
-
-			CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-			CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-			//console.log(CurX);
-			//var AmpDist = Math.round(Math.abs(151 - CurX) + Math.abs(260) - CurY)
-
-			console.log(pointerX);
-			var AmpDist1 = Math.round(Math.abs(242 - pointerX) + Math.abs(260) - pointerY)
-
-			gainNode1.gain.value = HEIGHT / AmpDist1;
-
-			myAudio1.volume = 1;
-		}
-
-
-		// connect the AudioBufferSourceNode to the gainNode
-		// and the gainNode to the destination, so we can play the
-		// music and adjust the volume using the mouse cursor
 		source1.connect(gainNode1);
-		gainNode1.connect(audioCtx1.destination);
 
+		gainNode.connect(audioCtx.destination);
+		gainNode1.connect(audioCtx.destination);
 	});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -292,6 +257,6 @@ Y-coordinate
 
 </script>
 
-</body>
+
 
 
