@@ -16,12 +16,14 @@
 <body>
 <h1>Breathe Project</h1>
 
+<div id="circle"></div>
 
 <div class="container">
 	<img src="./assets/PersonOutline.png" alt="PersonOutline" style="width:100%">
 	<button id="buttonStart" class="btnStart">Start</button>
 	<button id="button" class="btn">Enable</button>
 	<button id="button1" class="btn1">Enable</button>
+
 </div>
 
 <audio id="player">
@@ -34,22 +36,20 @@
 	<p>Browser too old to support HTML5 audio? How depressing!</p>
 </audio>
 
-<div id="circle"></div>
-
-
-<div class="space"></div>
-
+<!--Pointer coordinates display-->
+<!--<div class="space"></div>-->
+<!--
 <body onmousemove="coordinate(event)">
 
-<!-- X coordinate is stored in X-coordinate variable -->
-X-coordinate
-<label for="X"></label><input type="text" id="X">
+X coordinate is stored in X-coordinate variable -->
+<!--X-coordinate-->
+<!-- <label for="X"></label><input type="text" id="X">-->
 <br>
 <br>
 
 <!-- Y coordinate is stored in Y-coordinate variable -->
-Y-coordinate
-<label for="Y"></label><input type="text" id="Y">
+<!--Y-coordinate-->
+<!-- <label for="Y"></label><input type="text" id="Y">-->
 
 
 
@@ -75,7 +75,7 @@ Y-coordinate
 
 	//let HEIGHT = window.innerHeight;
 	//let WIDTH = window.innerWidth;
-	var HEIGHT = 7;
+	var HEIGHT = 1;
 
 	//Move the pointer
 	ball.onmousedown = function (event) {
@@ -198,14 +198,14 @@ Y-coordinate
 			CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
 			//var AmpDist = Math.round(Math.abs(151 - CurX) + Math.abs(260) - CurY)
 
-			var AmpDist = Math.round(Math.abs(151 - pointerX) + Math.abs(260) - pointerY)
-			var AmpDist1 = Math.round(Math.abs(242 - pointerX) + Math.abs(260) - pointerY)
+			var AmpDist = Math.round(Math.abs(151 - pointerX) + Math.abs(260 - pointerY))
+			var AmpDist1 = Math.round(Math.abs(242 - pointerX) + Math.abs(260- pointerY))
 
-			console.log(Math.abs(HEIGHT / AmpDist));
+
 
 			if(gainNodeFlag === 1) {
 
-				gainNode.gain.value = Math.abs(HEIGHT / AmpDist)+0.05;
+				gainNode.gain.value = HEIGHT/AmpDist;
 			}
 			else {
 				gainNode.gain.value =0
@@ -213,17 +213,15 @@ Y-coordinate
 			}
 
 
-
 			if(gainNodeFlag1 === 1) {
-
-				gainNode1.gain.value = Math.abs(HEIGHT / AmpDist1)+0.05;
+				gainNode1.gain.value = HEIGHT/AmpDist1;
 			}
 			else {
 				gainNode1.gain.value =0
 				gainNodeFlag1 = 0;
 			}
 
-			//myAudio.volume = 1;
+			//audioCtx.volume = 1;
 		}
 
 
@@ -235,9 +233,8 @@ Y-coordinate
 
 		gainNode.connect(audioCtx.destination);
 		gainNode1.connect(audioCtx.destination);
+
 	});
-
-
 
 
 	// coordinate function that calculate the X
