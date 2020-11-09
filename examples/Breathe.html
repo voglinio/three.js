@@ -52,7 +52,6 @@ Y-coordinate
 <label for="Y"></label><input type="text" id="Y">
 
 
-
 <script>
 	var ball = document.getElementById("circle");
 
@@ -63,7 +62,7 @@ Y-coordinate
 	var gainNodeFlag = 0;
 	var gainNodeFlag1 = 0;
 
-	var audioEndFlag=0;
+	var audioEndFlag = 0;
 
 	var AudioContext = window.AudioContext || window.webkitAudioContext;
 	var audioCtx;
@@ -140,9 +139,7 @@ Y-coordinate
 			buttonStart.innerHTML = "Pause";
 			button.innerHTML = "Disable";
 			button1.innerHTML = "Disable";
-		}
-
-		else  {
+		} else {
 			myAudio.pause();
 			myAudio1.pause();
 			gainNodeFlag = 0;
@@ -152,7 +149,6 @@ Y-coordinate
 			button1.innerHTML = "Enable";
 		}
 	});
-
 
 
 	button.addEventListener("click", function () {
@@ -180,7 +176,6 @@ Y-coordinate
 			button1.innerHTML = "Disable";
 		}
 	});
-
 
 
 	myAudio.addEventListener('play', () => {
@@ -214,26 +209,23 @@ Y-coordinate
 			//var AmpDist = Math.round(Math.abs(151 - CurX) + Math.abs(260) - CurY)
 
 			var AmpDist = Math.round(Math.abs(160 - pointerX) + Math.abs(275 - pointerY))
-			var AmpDist1 = Math.round(Math.abs(240 - pointerX) + Math.abs(275- pointerY))
+			var AmpDist1 = Math.round(Math.abs(240 - pointerX) + Math.abs(275 - pointerY))
 
 
+			if (gainNodeFlag === 1) {
 
-			if(gainNodeFlag === 1) {
+				gainNode.gain.value = HEIGHT / AmpDist;
 
-				gainNode.gain.value = HEIGHT/AmpDist;
-
-			}
-			else {
-				gainNode.gain.value =0
+			} else {
+				gainNode.gain.value = 0
 				gainNodeFlag = 0;
 			}
 
 
-			if(gainNodeFlag1 === 1) {
-				gainNode1.gain.value = HEIGHT/AmpDist1;
-			}
-			else {
-				gainNode1.gain.value =0
+			if (gainNodeFlag1 === 1) {
+				gainNode1.gain.value = HEIGHT / AmpDist1;
+			} else {
+				gainNode1.gain.value = 0
 				gainNodeFlag1 = 0;
 			}
 
