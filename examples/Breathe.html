@@ -19,7 +19,7 @@
 <div id="circle"></div>
 
 <div class="container">
-	<img src="./assets/PersonOutline.png" alt="PersonOutline" style="width:100%">
+	<img src="./assets/PersonOutline.png" alt="PersonOutline" class="BGSelectDisable" style="width:100%">
 	<button id="buttonStart" class="btnStart">Start</button>
 	<button id="button" class="btn">Enable</button>
 	<button id="button1" class="btn1">Enable</button>
@@ -37,19 +37,19 @@
 </audio>
 
 <!--Pointer coordinates display-->
-<!--<div class="space"></div>-->
-<!--
+<div class="space"></div>
+
 <body onmousemove="coordinate(event)">
 
-X coordinate is stored in X-coordinate variable -->
-<!--X-coordinate-->
-<!-- <label for="X"></label><input type="text" id="X">-->
+<!--X coordinate is stored in X-coordinate variable-->
+X-coordinate
+<label for="X"></label><input type="text" id="X">
 <br>
 <br>
 
-<!-- Y coordinate is stored in Y-coordinate variable -->
-<!--Y-coordinate-->
-<!-- <label for="Y"></label><input type="text" id="Y">-->
+<!--Y coordinate is stored in Y-coordinate variable-->
+Y-coordinate
+<label for="Y"></label><input type="text" id="Y">
 
 
 
@@ -63,6 +63,8 @@ X coordinate is stored in X-coordinate variable -->
 	var gainNodeFlag = 0;
 	var gainNodeFlag1 = 0;
 
+	var audioEndFlag=0;
+
 	var AudioContext = window.AudioContext || window.webkitAudioContext;
 	var audioCtx;
 
@@ -75,7 +77,7 @@ X coordinate is stored in X-coordinate variable -->
 
 	//let HEIGHT = window.innerHeight;
 	//let WIDTH = window.innerWidth;
-	var HEIGHT = 1;
+	var HEIGHT = 4;
 
 	//Move the pointer
 	ball.onmousedown = function (event) {
@@ -115,6 +117,18 @@ X coordinate is stored in X-coordinate variable -->
 		};
 
 	};
+
+	myAudio.addEventListener('ended', (event) => {
+		myAudio.pause();
+		myAudio.currentTime = 0;
+		myAudio1.pause();
+		myAudio1.currentTime = 0;
+		gainNodeFlag = 0;
+		gainNodeFlag1 = 0;
+		buttonStart.innerHTML = "Start";
+		button.innerHTML = "Enable";
+		button1.innerHTML = "Enable";
+	});
 
 
 	buttonStart.addEventListener("click", function () {
@@ -178,6 +192,7 @@ X coordinate is stored in X-coordinate variable -->
 		let source = audioCtx.createMediaElementSource(myAudio);
 		let source1 = audioCtx.createMediaElementSource(myAudio1);
 
+
 		// Create a gain node
 		let gainNode = audioCtx.createGain();
 		let gainNode1 = audioCtx.createGain();
@@ -198,14 +213,18 @@ X coordinate is stored in X-coordinate variable -->
 			CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
 			//var AmpDist = Math.round(Math.abs(151 - CurX) + Math.abs(260) - CurY)
 
-			var AmpDist = Math.round(Math.abs(151 - pointerX) + Math.abs(260 - pointerY))
-			var AmpDist1 = Math.round(Math.abs(242 - pointerX) + Math.abs(260- pointerY))
+			var AmpDist = Math.round(Math.abs(160 - pointerX) + Math.abs(275 - pointerY))
+			var AmpDist1 = Math.round(Math.abs(240 - pointerX) + Math.abs(275- pointerY))
 
 
 
 			if(gainNodeFlag === 1) {
 
 				gainNode.gain.value = HEIGHT/AmpDist;
+
+				console.log("log"+Math.log(HEIGHT/AmpDist));
+				console.log(HEIGHT/AmpDist);
+
 			}
 			else {
 				gainNode.gain.value =0

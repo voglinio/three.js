@@ -17,6 +17,15 @@ body {
   
 }
 
+.BGSelectDisable {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+
 #circle {
   width: 15px;
   height: 15px;
@@ -51,6 +60,11 @@ body {
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 
@@ -66,11 +80,16 @@ body {
   background-color: #555;
   color: white;
   font-size: 10px;
-  padding: 6px 12px;
+  padding: 12px 12px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 100%;
   text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .container .btn1 {
@@ -82,11 +101,16 @@ body {
   background-color: #555;
   color: white;
   font-size: 10px;
-  padding: 6px 12px;
+  padding: 12px 12px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 100%;
   text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 
